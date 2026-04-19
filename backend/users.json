@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1765856834132,
+    "username": "Lebinson",
+    "passwordHash": "$2b$10$vlssRlkAPv7bXquzaFrtsuHtS3CBolo7dhd2k95UsDDFNFv1fLj86"
+  },
+  {
+    "id": 1765935894876,
+    "username": "Hernando",
+    "passwordHash": "$2b$10$OAeFly1vvJZqEw26d8tqBuIvg7NAm2gIzzI7UDgBHGjSqXPr1yPuq"
+  },
+  {
+    "id": 1776471069167,
+    "username": "usuario1",
+    "passwordHash": "$2b$10$m8SIdLp0/bzj4skuKXgOUumYVmYoIM3mE7qjdLN1kiCZC/pCEN.aa"
+  },
+  {
+    "id": 1776475432254,
+    "username": "Garzon",
+    "passwordHash": "$2b$10$/6RyHldASMrY9nirtIBzPOovmbV0fC2usQs0Is/Rfw/vFB9q.SMzi"
+  },
+  {
+    "id": 1776601910165,
+    "full_name": "lebi",
+    "email": "legar@hotmail.com",
+    "security_answer": "kiara",
+    "passwordHash": "$2b$10$j6wubCRv34fpb6bV3xXulOzQBfQL4GwD3APXrdXvKc78dZfIZdC2i"
+  },
+  {
+    "id": 1776602256120,
+    "full_name": "Lebin Garzón",
+    "email": "lebiin@hotmail.com",
+    "security_answer": "berlín",
+    "passwordHash": "$2b$10$1FoEcBseNgYeq9yLovuIlOEue7vELk.nIpvXzSwikoGfRTJ3wRYzm"
+  },
+  {
+    "id": 1776604393336,
+    "full_name": "Oliver Garzon",
+    "email": "oliver@hotmail.com",
+    "security_answer": "yiz",
+    "passwordHash": "$2b$10$sBQDRcMtE8oKxFDgixzjmeN0Oyeua7Iubh0JGgTsTPyVtb4gGBgWa"
+  }
+]
