@@ -1,110 +1,78 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { recoverPassword } from "../services/auth";
 
-const API_URL = "http://localhost:3000";
+export default function RecoverPage() {
+  const navigate = useNavigate();
 
-function Recover() {
-  const [form, setForm] = useState({
-    email: "",
-    security_answer: "",
-    new_password: "",
-  });
-
+  const [email, setEmail] = useState("");
+  const [securityAnswer, setSecurityAnswer] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    setIsError(false);
 
-    if (
-      !form.email.trim() ||
-      !form.security_answer.trim() ||
-      !form.new_password.trim()
-    ) {
-      setMessage("Todos los campos son obligatorios.");
-      setIsError(true);
-      return;
-    }
+    const result = await recoverPassword({
+      email,
+      securityAnswer,
+      newPassword,
+    });
 
-    if (form.new_password.length < 6) {
-      setMessage("La nueva contrasena debe tener minimo 6 caracteres.");
-      setIsError(true);
-      return;
-    }
+    alert(JSON.stringify(result));
 
-    try {
-      const response = await fetch(`${API_URL}/api/recover`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setMessage(data.message || "No fue posible recuperar la contrasena.");
-        setIsError(true);
-        return;
-      }
-
-      setMessage(data.message || "Contrasena actualizada correctamente.");
-      setIsError(false);
-    } catch (error) {
-      setMessage("No fue posible conectar con el servidor.");
-      setIsError(true);
+    if (result.ok) {
+      setMessage(result.message || "Contrasena actualizada correctamente.");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } else {
+      setMessage(result.message || "No fue posible conectar con el servidor.");
     }
   };
 
   return (
     <div className="container">
       <div className="card">
-        <h1>Recuperar contrasena</h1>
+        <h1>Recuperar PRUEBA</h1>
 
         <form onSubmit={handleSubmit}>
           <label>Email</label>
           <input
             type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
           <label>Respuesta de seguridad</label>
           <input
             type="text"
-            name="security_answer"
-            value={form.security_answer}
-            onChange={handleChange}
+            value={securityAnswer}
+            onChange={(e) => setSecurityAnswer(e.target.value)}
             required
           />
 
           <label>Nueva contrasena</label>
           <input
             type="password"
-            name="new_password"
-            value={form.new_password}
-            onChange={handleChange}
-            minLength={6}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
             required
           />
 
-          <button type="submit">Actualizar contrasena</button>
+          <button type="submit">Actualizar TEST</button>
         </form>
 
         {message && (
-          <p className={isError ? "message error" : "message success"}>
+          <p
+            style={{
+              color: message.toLowerCase().includes("correctamente")
+                ? "lightgreen"
+                : "#ff6b6b",
+            }}
+          >
             {message}
           </p>
         )}
@@ -114,5 +82,3 @@ function Recover() {
     </div>
   );
 }
-
-export default Recover;

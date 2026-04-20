@@ -1,76 +1,35 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../services/auth";
 
-const API_URL = "http://localhost:3000";
-
-function Register() {
+export default function RegisterPage() {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    full_name: "",
-    email: "",
-    password: "",
-    security_answer: "",
-  });
-
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [securityAnswer, setSecurityAnswer] = useState("");
   const [message, setMessage] = useState("");
-  const [isError, setIsError] = useState(false);
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    setIsError(false);
 
-    if (
-      !form.full_name.trim() ||
-      !form.email.trim() ||
-      !form.password.trim() ||
-      !form.security_answer.trim()
-    ) {
-      setMessage("Todos los campos son obligatorios.");
-      setIsError(true);
-      return;
-    }
+    const result = await registerUser({
+      fullName,
+      email,
+      password,
+      securityAnswer,
+    });
 
-    if (form.password.length < 6) {
-      setMessage("La contrasena debe tener minimo 6 caracteres.");
-      setIsError(true);
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API_URL}/api/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setMessage(data.message || "Error al registrar usuario.");
-        setIsError(true);
-        return;
-      }
-
-      setMessage(data.message || "Usuario registrado correctamente.");
-      setIsError(false);
-
+    
+    if (result.ok) {
+      setMessage(result.message || "Usuario registrado correctamente.");
       setTimeout(() => {
         navigate("/login");
       }, 1500);
-    } catch (error) {
-      setMessage("No fue posible conectar con el servidor.");
-      setIsError(true);
+    } else {
+      setMessage(result.message || "No fue posible conectar con el servidor.");
     }
   };
 
@@ -83,37 +42,32 @@ function Register() {
           <label>Nombre completo</label>
           <input
             type="text"
-            name="full_name"
-            value={form.full_name}
-            onChange={handleChange}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             required
           />
 
           <label>Email</label>
           <input
             type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
           <label>Contrasena</label>
           <input
             type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            minLength={6}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 
           <label>Respuesta de seguridad</label>
           <input
             type="text"
-            name="security_answer"
-            value={form.security_answer}
-            onChange={handleChange}
+            value={securityAnswer}
+            onChange={(e) => setSecurityAnswer(e.target.value)}
             required
           />
 
@@ -121,7 +75,13 @@ function Register() {
         </form>
 
         {message && (
-          <p className={isError ? "message error" : "message success"}>
+          <p
+            style={{
+              color: message.toLowerCase().includes("correctamente")
+                ? "lightgreen"
+                : "#ff6b6b",
+            }}
+          >
             {message}
           </p>
         )}
@@ -131,5 +91,3 @@ function Register() {
     </div>
   );
 }
-
-export default Register;
