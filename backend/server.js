@@ -33,7 +33,7 @@ function isValidEmail(email) {
 }
 
 app.get("/", (req, res) => {
-  res.send("API EDMapp funcionando correctamente");
+  res.send("API EDMapp funcionando correctamente v2");
 });
 
 app.post("/api/register", (req, res) => {
