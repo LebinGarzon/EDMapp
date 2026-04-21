@@ -39,5 +39,12 @@
     "email": "oliver@hotmail.com",
     "security_answer": "yiz",
     "passwordHash": "$2b$10$sBQDRcMtE8oKxFDgixzjmeN0Oyeua7Iubh0JGgTsTPyVtb4gGBgWa"
+  },
+  {
+    "id": 1776662646538,
+    "full_name": "Hernando Saldaña",
+    "email": "hernandosal@hotmail.com",
+    "security_answer": "oliver",
+    "passwordHash": "$2b$10$cKDZk7K/9ZM/vZdS4Q3TbeB/w.5X9AlOmFCAsJzqic93.6bq5/3Jm"
   }
 ]
