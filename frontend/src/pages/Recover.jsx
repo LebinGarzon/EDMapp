@@ -35,7 +35,7 @@ export default function RecoverPage() {
   return (
     <div className="container">
       <div className="card">
-        <h1>Recuperar PRUEBA</h1>
+        <h1>Recuperar</h1>
 
         <form onSubmit={handleSubmit}>
           <label>Email</label>
@@ -62,7 +62,7 @@ export default function RecoverPage() {
             required
           />
 
-          <button type="submit">Actualizar TEST</button>
+          <button type="submit">Actualizar</button>
         </form>
 
         {message && (
